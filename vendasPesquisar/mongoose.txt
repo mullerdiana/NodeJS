@@ -1,0 +1,39 @@
+As convenções gerais são:
+
+Nomes em minúsculas: isso evita problemas de diferenciação entre maiúsculas e minúsculas, pois os nomes de coleção do MongoDB são diferenciam maiúsculas de minúsculas .
+Plural: mais óbvio rotular uma coleção de algo como o plural, por exemplo "arquivos" em vez de "arquivo"
+Sem separadores de palavras: evita problemas em que pessoas diferentes (incorretamente) separam palavras (nome de usuário <-> nome_do_usuário, nome_do_ nome <nome>). Este está em debate de acordo com
+
+//model
+
+const Produtos = mongoose.model("Produtos",{
+    nome: String,
+    v1Unit:Number,
+    codigoBarras: String
+});
+
+// view engine setup
+app.set("view engine", "ejs");
+app.set("views", __dirname,"views");
+
+app.use(express.urlencoded());//fluxe
+app.use(express.json());//type json
+
+//routes
+
+app.get("/",(req, res)=> {
+  res.send("home")
+});
+
+app.get("/produtos",(req, res)=> {
+    res.send("produtos")
+  });
+
+app.get("/cadastrarProdutos",(req, res)=> {
+    res.render("formprodutos");
+  });
+
+app.listen(port, () => {
+    console.log("Servidor rodando na porta",+ port);
+
+});

@@ -1,0 +1,1 @@
+mongodb+srv://diana_muller:diana_muller@cluster0.gzmky.mongodb.net/vendas?retryWrites=true&w=majority
