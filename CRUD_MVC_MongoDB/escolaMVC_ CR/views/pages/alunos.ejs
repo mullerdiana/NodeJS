@@ -1,0 +1,62 @@
+<%- include('../partials/header'); %>
+
+<section class="container">
+    <div class="row">
+        <div class="col">
+            <div class="row mt-5">
+                <div class="col-6">
+                    <h1>Lista de alunos</h1>
+                    
+                </div>
+
+                <div class="col-6">
+                    <a href="/alunos/cadastrarAlunos" class="btn btn-primary">Inserir Aluno</a>
+                </div>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Idade</th>
+                        <th>Turma</th>
+                        <th>Sala</th>
+                        <th>Telefone responsável</th>
+                        <th>Ações</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <% resultado.forEach(function(aluno){ %>
+                        <!--variável q criamos na rota -->
+                        <tr>
+                            <td>
+                                <%= aluno.nome %>
+                            </td>
+                            <!--Do jeito que nomeamos no model-->
+                            <td>
+                                <%= aluno.idade %>
+                            </td>
+                            <td>
+                                <%= aluno.turma %>
+                            </td>
+                            <td>
+                                <%= aluno.sala %>
+                            </td>
+                            <td>
+                                <%= aluno.contato %>
+                            </td>
+                            <td>
+                                <a class="btn btn-warning" href="/editarAluno/<%= aluno._id %>">Editar</a>
+                                <a class="btn btn-danger" href="/deletarAluno/<%= aluno._id %>">Excluir</a>
+                            </td>
+
+                        </tr>
+                        <% })%>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+
+<%- include('../partials/footer'); %>

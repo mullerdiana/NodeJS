@@ -1,0 +1,68 @@
+const alunos_bd = require("../models/alunos-model");
+
+// READ
+exports.listar_alunos = (req, res) => {
+  alunos_bd.find({}, (err, aluno) => {
+    if (err) return res.status(500).send("Erro ao listar!");
+    res.render("views/pages/alunos", { resultado: aluno });
+  });
+};
+
+// CREATE
+exports.cadastrar_alunos_get = (req, res) => {
+  res.render("views/pages/formAlunos");
+};
+
+exports.cadastrar_alunos_post = (req, res) => {
+  let incluir_registro = new alunos_bd();
+
+  incluir_registro.nome = req.body.nome; // .model = .name
+  incluir_registro.idade = req.body.idade;
+  incluir_registro.turma = req.body.turma;
+  incluir_registro.sala = req.body.sala;
+  incluir_registro.contato = req.body.contato;
+
+  incluir_registro.save((err) => {
+    if (err) return res.satus(500).send("Erro ao cadastrar");
+    return res.redirect("/alunos");
+  });
+};
+
+// DELETE
+exports.deletar_aluno = (req, res) => {
+  let id = req.params.id;
+  alunos_bd.deleteOne({ _id: id }, (err) => {
+    if (err) 
+      return res.status(500).send("Erro ao deletar");
+    res.redirect("/alunos");
+  });
+};
+
+// UPDATE
+exports.editar_aluno_get = (req, res) =>{
+  let id = req.params.id;
+  alunos_bd.findById(id, (err, aluno)=>{
+    if (err) 
+      return res.status(500).send("Erro ao editar - get");
+    res.render("views/pages/formEditarAluno", { resultado : aluno});
+  }); 
+};
+
+exports.editar_aluno_post = (req,res) =>{
+  let id = req.body.id;
+  alunos_bd.findById(id, (err, aluno)=>{
+    if(err)
+      return res.status(500).send("Erro ao Editar - post");
+    aluno.nome = req.body.nome;
+    aluno.idade = req.body.idade;
+    aluno.turma = req.body.turma;
+    aluno.sala = req.body.sala;
+    aluno.contato = req.body.contato;
+
+    aluno.save((err)=>{
+      if (err) 
+        return res.status(500).send("Erro ao salvar alteração");
+      return res.redirect("/alunos");
+    });
+    });
+};
